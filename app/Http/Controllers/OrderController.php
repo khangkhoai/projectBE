@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Product\ProductRepositoryInterface;
-class ProductController extends Controller
+use App\Repositories\Order\OrderRepositoryInterface;
+class OrderController extends Controller
 {
     /**
      * @var PostRepositoryInterface|\App\Repositories\Repository
      */
-    protected $productRepo;
+    protected $orderRepo;
 
-    public function __construct(ProductRepositoryInterface $productRepo)
+    public function __construct(OrderRepositoryInterface $orderRepo)
     {
-        $this->productRepo = $productRepo;
+        $this->orderRepo = $orderRepo;
     }
     /**
      * Display a listing of the resource.
@@ -22,8 +22,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = $this->productRepo->getAll();
-        return response()->json($product, 201);
+        $order = $this->orderRepo->getAll();
+        return response()->json($order, 201);
     }
 
     /**
@@ -45,8 +45,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $Product = $this->productRepo->create($data);
-        return response()->json($Product, 201);
+        $order = $this->orderRepo->create($data);
+        return response()->json($order, 201);
     }
 
     /**
@@ -57,8 +57,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $Product = $this->productRepo->find($id);
-        return response()->json($Product, 201);
+        $order = $this->orderRepo->find($id);
+        return response()->json($order, 201);
     }
 
     /**
@@ -82,8 +82,8 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $Product = $this->productRepo->update($id, $data);
-        return response()->json($Product, 201);
+        $order = $this->orderRepo->update($id, $data);
+        return response()->json($order, 201);
     }
 
     /**
@@ -94,7 +94,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $this->productRepo->delete($id);
+        $this->orderRepo->delete($id);
         return response()->json(null, 201);
     }
 }

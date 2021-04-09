@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Product\ProductRepositoryInterface;
-class ProductController extends Controller
+use App\Repositories\Category\CategoryRepositoryInterface;
+class CategoryController extends Controller
 {
     /**
      * @var PostRepositoryInterface|\App\Repositories\Repository
      */
-    protected $productRepo;
+    protected $categoryRepo;
 
-    public function __construct(ProductRepositoryInterface $productRepo)
+    public function __construct(CategoryRepositoryInterface $categoryRepo)
     {
-        $this->productRepo = $productRepo;
+        $this->categoryRepo = $categoryRepo;
     }
     /**
      * Display a listing of the resource.
@@ -22,8 +22,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = $this->productRepo->getAll();
-        return response()->json($product, 201);
+        $category = $this->categoryRepo->getAll();
+        return response()->json($category, 201);
     }
 
     /**
@@ -45,8 +45,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $Product = $this->productRepo->create($data);
-        return response()->json($Product, 201);
+        $Category = $this->categoryRepo->create($data);
+        return response()->json($Category, 201);
     }
 
     /**
@@ -57,8 +57,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $Product = $this->productRepo->find($id);
-        return response()->json($Product, 201);
+        $Category = $this->categoryRepo->find($id);
+        return response()->json($Category, 201);
     }
 
     /**
@@ -82,8 +82,8 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $Product = $this->productRepo->update($id, $data);
-        return response()->json($Product, 201);
+        $Category = $this->categoryRepo->update($id, $data);
+        return response()->json($Category, 201);
     }
 
     /**
@@ -94,7 +94,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $this->productRepo->delete($id);
+        $this->categoryRepo->delete($id);
         return response()->json(null, 201);
     }
 }

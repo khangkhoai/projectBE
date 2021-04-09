@@ -1,19 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Repositories\Customer\CustomerRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Repositories\Product\ProductRepositoryInterface;
-class ProductController extends Controller
+
+class CustomerController extends Controller
 {
     /**
      * @var PostRepositoryInterface|\App\Repositories\Repository
      */
-    protected $productRepo;
+    protected $customerRepo;
 
-    public function __construct(ProductRepositoryInterface $productRepo)
+    public function __construct(CustomerRepositoryInterface $customerRepo)
     {
-        $this->productRepo = $productRepo;
+        $this->customerRepo = $customerRepo;
     }
     /**
      * Display a listing of the resource.
@@ -22,8 +22,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = $this->productRepo->getAll();
-        return response()->json($product, 201);
+        $customer = $this->customerRepo->getAll();
+        return response()->json($customer, 201);
     }
 
     /**
@@ -45,8 +45,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $Product = $this->productRepo->create($data);
-        return response()->json($Product, 201);
+        $customer = $this->customerRepo->create($data);
+        return response()->json($customer, 201);
     }
 
     /**
@@ -57,8 +57,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $Product = $this->productRepo->find($id);
-        return response()->json($Product, 201);
+        $customer = $this->customerRepo->find($id);
+        return response()->json($customer, 201);
     }
 
     /**
@@ -82,8 +82,8 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $Product = $this->productRepo->update($id, $data);
-        return response()->json($Product, 201);
+        $customer = $this->customerRepo->update($id, $data);
+        return response()->json($customer, 201);
     }
 
     /**
@@ -94,7 +94,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $this->productRepo->delete($id);
+        $this->customerRepo->delete($id);
         return response()->json(null, 201);
     }
 }

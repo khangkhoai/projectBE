@@ -4,6 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Order_detailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +24,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::resource('product',ProductController::class);
+Route::resource('category',CategoryController::class);
+Route::resource('customer',CustomerController::class);
+Route::resource('order',OrderController::class);
+Route::resource('order_detail',Order_detailController::class);
 Route::group([
     'prefix' => 'auth'
 ], function () {
