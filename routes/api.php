@@ -20,24 +20,19 @@ use App\Http\Controllers\Order_detailController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->group(function (){
+    Route::get('user', [AuthController::class,'user']);
+    Route::get('logout', [AuthController::class,'logout']);
+   
+    Route::resource('product',ProductController::class);
+    Route::resource('category',CategoryController::class);
+    Route::get('category/get/{id}',[CategoryController::class,'getDetails']);
+    Route::resource('customer',CustomerController::class);
+    Route::resource('order',OrderController::class);
+    Route::resource('order_detail',Order_detailController::class);
 });
-Route::resource('product',ProductController::class);
-Route::resource('category',CategoryController::class);
-Route::resource('customer',CustomerController::class);
-Route::resource('order',OrderController::class);
-Route::resource('order_detail',Order_detailController::class);
-Route::group([
-    'prefix' => 'auth'
-], function () {
-    Route::post('login', [AuthController::class,'login']);
-    Route::post('signup', [AuthController::class,'signup']);
 
-    Route::group([
-      'middleware' => 'auth:api'
-    ], function() {
-        Route::post('logout', [AuthController::class,'logout']);
-        Route::post('user', [AuthController::class,'user']);
-    });
+Route::prefix('auth')->group(function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('signup', [AuthController::class, 'signup']);
 });

@@ -44,7 +44,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        if ($request->hasFile('thumb')) {
+            $file = $request->thumb;
+            $name = time() . $file->getClientOriginalName();
+            $file_path = $request->file('thumb')->move('uploads/', $name);
+            $path_name = $file_path->getPathname();
+        }
+        $data = [
+            'name' => $request->name,
+            'desc' => $request->desc,
+            'price' => $request->price,
+            'discount' => $request->discount,
+            'amount' => $request->amount,
+            'category_id' => $request->category_id,
+            'sale_price' => $request->price - ($request->price * ($request->discount / 100)),
+            'thumb' => $path_name
+        ];
+       
         $Product = $this->productRepo->create($data);
         return response()->json($Product, 201);
     }

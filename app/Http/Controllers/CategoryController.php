@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Models\Product;
 class CategoryController extends Controller
 {
     /**
@@ -96,5 +97,9 @@ class CategoryController extends Controller
     {
         $this->categoryRepo->delete($id);
         return response()->json(null, 201);
+    }
+    public function getDetails($id){
+        return Product::where('category_id', $id)->get();
+       
     }
 }
