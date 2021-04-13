@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 use App\Repositories\Product\ProductRepositoryInterface;
 class ProductController extends Controller
 {
@@ -58,11 +59,11 @@ class ProductController extends Controller
             'amount' => $request->amount,
             'category_id' => $request->category_id,
             'sale_price' => $request->price - ($request->price * ($request->discount / 100)),
-            'thumb' => $path_name
+            'thumb' => $path_name ?? ''
         ];
-       
-        $Product = $this->productRepo->create($data);
-        return response()->json($Product, 201);
+        
+        return  $this->productRepo->create($data);
+         
     }
 
     /**
@@ -95,11 +96,27 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateProduct(Product $product, Request $request)
     {
-        $data = $request->all();
-        $Product = $this->productRepo->update($id, $data);
-        return response()->json($Product, 201);
+        $data = [
+            'name' => $request->name,
+            'desc' => $request->desc,
+            'price' => $request->price,
+            'discount' => $request->discount,
+            'qty' => $request->qty,
+            'category_id' => $request->category_id,
+            'sale_price' => $request->price - ($request->price * ($request->discount / 100)),
+        ];
+        if ($request->hasFile('thumb')) {
+            $file = $request->thumb;
+            $name = time() . $file->getClientOriginalName();
+            $file_path = $request->file('thumb')->move('uploads/', $name);
+            $path_name = $file_path->getPathname();
+        }else{
+            $path_name = $this->productRepo->find($product->id)->thumb;
+        }
+        $data['thumb'] = $path_name;
+        return $product->update($data);
     }
 
     /**
@@ -113,4 +130,9 @@ class ProductController extends Controller
         $this->productRepo->delete($id);
         return response()->json(null, 201);
     }
+    public function search($name)
+    {
+         return Product::where('name', 'LIKE', '%'  . $name . '%')->get();
+    }
+ 
 }

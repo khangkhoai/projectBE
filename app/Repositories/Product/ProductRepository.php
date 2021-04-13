@@ -10,5 +10,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return \App\Models\Product::class;
     }
+    public function find($id){
+        $product = $this->getModel()::with('category')->find($id);
+        return $product;
+    }
 
 }
