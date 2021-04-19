@@ -14,5 +14,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $product = $this->getModel()::with('category')->find($id);
         return $product;
     }
+    public function get(){
+        $product = $this->getModel()::paginate(6);
+        return $product;
+    }
 
 }
