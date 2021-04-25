@@ -10,5 +10,4 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     {
         return \App\Models\Order::class;
     }
-
 }

@@ -26,6 +26,16 @@ class ProductController extends Controller
         $product = $this->productRepo->get();
         return response()->json($product, 201);
     }
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getProduct()
+    {
+        $product = $this->productRepo->getAll();
+        return response()->json($product, 201);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -130,6 +140,12 @@ class ProductController extends Controller
         $this->productRepo->delete($id);
         return response()->json(null, 201);
     }
+    /**
+     * Show the product from name
+     *
+     * @param  int  $name
+     * @return product
+     */
     public function search($name)
     {
          return Product::where('name', 'LIKE', '%'  . $name . '%')->get();

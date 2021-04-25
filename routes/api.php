@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Order_detailController;
 use App\Http\Controllers\LoginController;
+use App\Models\Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,23 +22,28 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-// Route::middleware('auth:api')->group(function (){
+Route::middleware('auth:api')->group(function (){
     Route::get('user', [AuthController::class,'user']);
     Route::get('logout', [AuthController::class,'logout']);
-   
-    Route::resource('product',ProductController::class);
-    Route::post('product/{product}',[ProductController::class,'updateProduct']);
-    Route::get('product/search/{name}',[ProductController::class,'search']);
-    Route::resource('category',CategoryController::class);
-    Route::get('category/get/{id}',[CategoryController::class,'getDetails']);
-    Route::resource('customer',CustomerController::class);
-    Route::resource('order',OrderController::class);
-    Route::resource('order_detail',Order_detailController::class);
-// });
+    Route::get('product/getProduct',[ProductController::class,'getProduct']);
+});
+
+Route::resource('product',ProductController::class);
+
+Route::post('product/{product}',[ProductController::class,'updateProduct']);
+Route::get('product/search/{name}',[ProductController::class,'search']);
+Route::resource('category',CategoryController::class);
+Route::get('category/get/{id}',[CategoryController::class,'getDetails']);
+Route::resource('customer',CustomerController::class);
+Route::resource('order',OrderController::class);
+Route::resource('order_detail',Order_detailController::class);
+Route::get('isLogin',[LoginController::class,'isLogin']);
+Route::get('showOrder',[OrderController::class,'showOrder']);
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('signup', [AuthController::class, 'signup']);
     Route::post('login-customer', [LoginController::class, 'login']);
 });
+
 

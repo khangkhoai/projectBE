@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
@@ -11,25 +12,23 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        // $request->validate([
-        //     'email' => 'required|string|email',
-        //     'password' => 'required|string',
-        //     'remember_me' => 'boolean'
-        // ]);
-        $arr = [
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
         $credentials = request(['email', 'password']);
-        
-        if (Auth::guard('customer')->attempt($arr))
-        {
-            dd('dang nhap thanh cong');
+
+        if (!Auth::guard('customer')->attempt($credentials)) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
+        } else {
+            return Auth::guard('customer')->user();
         }
-        else
-        {
-            dd('dang nhap that bai');
-        }
-            
+    }
+    /**
+     * Exam Login 
+     *
+     * @return 
+     */
+    public function isLogin()
+    {
+        return Auth::guard('customer')->check();
     }
 }

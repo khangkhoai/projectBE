@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\Order\OrderRepositoryInterface;
+use App\Models\Order;
 class OrderController extends Controller
 {
     /**
@@ -97,4 +98,15 @@ class OrderController extends Controller
         $this->orderRepo->delete($id);
         return response()->json(null, 201);
     }
+     /**
+     * Display order newest.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showOrder()
+    {
+        return Order::orderBy('id', 'DESC' )->take(1)->get();
+    }
+
 }

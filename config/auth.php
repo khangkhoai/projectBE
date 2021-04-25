@@ -49,7 +49,7 @@ return [
             'provider' => 'customers',
         ],
         'customer-api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'customers',
         ],
     ],

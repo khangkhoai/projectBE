@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Customer;
 use App\Repositories\Customer\CustomerRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -44,9 +46,16 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        $customer = $this->customerRepo->create($data);
-        return response()->json($customer, 201);
+        $data = new Customer([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'address' => $request->address
+        ]);
+        $data->save();
+        
+        
     }
 
     /**
