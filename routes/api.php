@@ -29,7 +29,6 @@ Route::middleware('auth:api')->group(function (){
 });
 
 Route::resource('product',ProductController::class);
-
 Route::post('product/{product}',[ProductController::class,'updateProduct']);
 Route::get('product/search/{name}',[ProductController::class,'search']);
 Route::resource('category',CategoryController::class);
